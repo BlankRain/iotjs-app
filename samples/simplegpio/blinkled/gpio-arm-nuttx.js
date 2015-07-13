@@ -1,58 +1,58 @@
 // for NuttX on STM32F4-discovery BB
-var GPIO_MODE_SHIFT   = 18;
-var GPIO_MODE_MASK    = (3 << GPIO_MODE_SHIFT);
-var GPIO_INPUT        = (0 << GPIO_MODE_SHIFT);
-var GPIO_OUTPUT       = (1 << GPIO_MODE_SHIFT);
+var GMS = 18; // mode shift
+var G_M_MASK  = (3 << GMS);
+var G_INPUT   = (0 << GMS);
+var G_OUTPUT  = (1 << GMS);
 
-var GPIO_PUPD_SHIFT   = (16);
-var GPIO_PUPD_MASK    = (3 << GPIO_PUPD_SHIFT);
-var GPIO_FLOAT        = (0 << GPIO_PUPD_SHIFT);
-var GPIO_PULLUP       = (1 << GPIO_PUPD_SHIFT);
-var GPIO_PULLDOWN     = (2 << GPIO_PUPD_SHIFT);
+var GPS = (16); // pull up/dn shift
+var G_P_MASK  = (3 << GPS);
+var G_FLOAT   = (0 << GPS);
+var G_PULLUP  = (1 << GPS);
+var G_PULLDOWN= (2 << GPS);
 
-var GPIO_PORT_SHIFT   = (4);
-var GPIO_PORT_MASK    = (7 << GPIO_PORT_SHIFT);
-var GPIO_PORTA        = (0 << GPIO_PORT_SHIFT);
-var GPIO_PORTB        = (1 << GPIO_PORT_SHIFT);
-var GPIO_PORTC        = (2 << GPIO_PORT_SHIFT);
-var GPIO_PORTD        = (3 << GPIO_PORT_SHIFT);
+var GTS = (4); // port shift
+var G_T_MASK= (7 << GTS);
+var G_PORTA = (0 << GTS);
+var G_PORTB = (1 << GTS);
+var G_PORTC = (2 << GTS);
+var G_PORTD = (3 << GTS);
 
-var GPIO_PIN_SHIFT    = (0);
-var GPIO_PIN_MASK     = (15 << GPIO_PIN_SHIFT);
-var GPIO_PIN0         = (0 << GPIO_PIN_SHIFT);
-var GPIO_PIN1         = (1 << GPIO_PIN_SHIFT);
-var GPIO_PIN2         = (2 << GPIO_PIN_SHIFT);
-var GPIO_PIN3         = (3 << GPIO_PIN_SHIFT);
-var GPIO_PIN4         = (4 << GPIO_PIN_SHIFT);
-var GPIO_PIN5         = (5 << GPIO_PIN_SHIFT);
-var GPIO_PIN6         = (6 << GPIO_PIN_SHIFT);
-var GPIO_PIN7         = (7 << GPIO_PIN_SHIFT);
-var GPIO_PIN8         = (8 << GPIO_PIN_SHIFT);
-var GPIO_PIN9         = (9 << GPIO_PIN_SHIFT);
-var GPIO_PIN10        = (10 << GPIO_PIN_SHIFT);
-var GPIO_PIN11        = (11 << GPIO_PIN_SHIFT);
-var GPIO_PIN12        = (12 << GPIO_PIN_SHIFT);
-var GPIO_PIN13        = (13 << GPIO_PIN_SHIFT);
-var GPIO_PIN14        = (14 << GPIO_PIN_SHIFT);
-var GPIO_PIN15        = (15 << GPIO_PIN_SHIFT);
+var GIS = (0);
+var G_I_MASK=(15 << GIS);
+var G_PIN0  = (0 << GIS);
+var G_PIN1  = (1 << GIS);
+var G_PIN2  = (2 << GIS);
+var G_PIN3  = (3 << GIS);
+var G_PIN4  = (4 << GIS);
+var G_PIN5  = (5 << GIS);
+var G_PIN6  = (6 << GIS);
+var G_PIN7  = (7 << GIS);
+var G_PIN8  = (8 << GIS);
+var G_PIN9  = (9 << GIS);
+var G_PIN10 =(10 << GIS);
+var G_PIN11 =(11 << GIS);
+var G_PIN12 =(12 << GIS);
+var G_PIN13 =(13 << GIS);
+var G_PIN14 =(14 << GIS);
+var G_PIN15 =(15 << GIS);
 
 var GPIO_MAP = {
   CTRL: {
-    OPEN:  0,
-    CLOSE: 0,
-    OUT:   GPIO_OUTPUT | GPIO_PULLUP,
-    IN:    GPIO_INPUT  | GPIO_PULLDOWN,
-    FLOAT: GPIO_OUTPUT | GPIO_FLOAT,
+    ENABLE : 0,
+    DISABLE : 0,
+    OUT: G_OUTPUT | G_PULLUP,
+    IN: G_INPUT | G_PULLDOWN,
+    FLOAT: G_OUTPUT | G_FLOAT
   },
   PINS: {
-    LED1: { GPIO: GPIO_PIN8  | GPIO_PORTA },
-    LED2: { GPIO: GPIO_PIN10 | GPIO_PORTA },
-    LED3: { GPIO: GPIO_PIN15 | GPIO_PORTA },
-    LED4: { GPIO: GPIO_PIN11 | GPIO_PORTD },
+    LED1: { PIN: G_PIN8  | G_PORTA },
+    LED2: { PIN: G_PIN10 | G_PORTA },
+    LED3: { PIN: G_PIN15 | G_PORTA },
+    LED4: { PIN: G_PIN11 | G_PORTD },
 
-    LED5: { GPIO: GPIO_PIN3  | GPIO_PORTA },
-    BTN1: { GPIO: GPIO_PIN0  | GPIO_PORTA },
-  },
+    LED5: { PIN: G_PIN3  | G_PORTA },
+    BTN1: { PIN: G_PIN0  | G_PORTA }
+  }
 };
 
 module.exports = GPIO_MAP;

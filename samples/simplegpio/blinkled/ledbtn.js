@@ -3,23 +3,14 @@
 var events = require('events')
   , eventEmitter = new events.EventEmitter()
   , gpio = require("iotjs-gpio")
-  , gpiocfg = require("gpiocfg.js")
+  , gpiocfg = require("./gpiocfg.js")
   , gpio_pout = ["LED1", "LED2", "LED3", "LED4", "LED5"]
   , gpio_cled = 4
   , gpio_ocnt = 5
   , gpio_pinp = ["BTN1"]
   , gpio_icnt = 1
   , intervalId
-  , durationId
-  ;
-
-
-function map_pin(portname, ctrlcode) {
-  var port = gpiomap.PINS[portname].GPIO;
-  if (ctrlcode)
-    port |= ctrlcode;
-  return port;
-}
+  , durationId;
 
 
 function gpio_setpins() {
@@ -34,11 +25,11 @@ function gpio_setpins() {
   }
   var portpin;
   for (idx=0; idx<gpio_ocnt; idx++) {
-    portpin = gpiocfg.openout(gpio_pout[idx]);
+    portpin = gpiocfg.enableout(gpio_pout[idx]);
     gpio.pinmode(portpin, chk_pins);
   }
   for (idx=0; idx<gpio_icnt; idx++) {
-    portpin = gpiocfg.openin(gpio_pinp[idx]);
+    portpin = gpiocfg.enablein(gpio_pinp[idx]);
     gpio.pinmode(portpin, chk_pins);
   }
 }
@@ -72,7 +63,6 @@ function gpio_run() {
         }
       }
     });
-
   }, 100);
 }
 
@@ -89,14 +79,14 @@ function gpio_cleanup(timeout) {
     for (idx=0; idx<gpio_ocnt; idx++) {
       portpin = gpiocfg.map(gpio_pout[idx]);
       gpio.write(portpin, 0);
-      portpin = gpiocfg.closefloat(gpio_pout[idx]);
+      portpin = gpiocfg.disablefloat(gpio_pout[idx]);
       gpio.pinmode(portpin);
     }
 
     for (idx=0; idx<gpio_icnt; idx++) {
       portpin = gpiocfg.map(gpio_pinp[idx]);
       gpio.write(portpin, 0);
-      portpin = gpiocfg.closefloat(gpio_pinp[idx]);
+      portpin = gpiocfg.disablefloat(gpio_pinp[idx]);
       gpio.pinmode(portpin);
     }
 
@@ -104,20 +94,17 @@ function gpio_cleanup(timeout) {
   }, timeout );
 }
 
+gpio.initialize(function() {
+  gpio_setpins();
+});
+
+
 eventEmitter.on('pins_ready', function() {
-  var timeoutsec = 10;
   gpio_run();
-  if (process.iotjs)
-    timeoutsec = 20;
-  gpio_cleanup(timeoutsec*1000);
+  gpio_cleanup(10 * 1000); // run for 10 seconds
 });
 
 
 eventEmitter.on('pins_done', function() {
   gpio.release();
 })
-
-
-gpio.initialize(function() {
-  gpio_setpins();
-});

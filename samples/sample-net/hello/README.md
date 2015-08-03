@@ -1,12 +1,12 @@
-# Hello IoT.js calculator server example.
+## Hello IoT.js calculator server example.
 
-## Server
+### Server
 ```
 $ iotjs server.js
 ```
 
 
-## Client
+### Client
 ```
 $ iotjs client.js <server ip>
 ```

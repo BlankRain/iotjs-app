@@ -3,7 +3,7 @@
 var events = require("events")
   , eventEmitter = new events.EventEmitter()
   , gpio = require("iotjs-gpio")
-  , gpiocfg = require("./gpiocfg.js")
+  , gpiocfg = require("gpiocfg.js")
   , gpio_pout = ["LED1", "LED2", "LED3", "LED4"]
   , gpio_ocnt = 4
   , intervalId

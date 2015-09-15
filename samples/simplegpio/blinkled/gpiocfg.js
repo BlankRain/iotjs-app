@@ -1,7 +1,7 @@
 // reads GPIO configuration file for iot.js or node.js
 // provides simple method for pin open/close/map
 
-var cfgfile = "./gpio-" + process.arch + "-" + process.platform + ".js";
+var cfgfile = "gpio-" + process.arch + "-" + process.platform + ".js";
 var gpiomap = require(cfgfile);
 
 function GpioCfg() {
